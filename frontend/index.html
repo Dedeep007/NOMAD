@@ -1,13 +1,200 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>abc</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOMAD Prototype</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div id="app-container">
+
+        <div class="screen active" id="screen-1-splash">
+            <div class="splash-background"></div>
+            <div class="splash-content">
+                <h1>NOMAD</h1>
+                <p>Your AI travel companion</p>
+                <div class="search-bar" id="start-search-btn">
+                    <span>A weekend trip to Goa</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="screen-2-refine">
+            <div class="splash-background"></div>
+            <div class="refine-content">
+                <div class="chat-bubble user">
+                    A weekend trip to Goa
+                </div>
+                <div class="chat-bubble nomad">
+                    Sounds amazing! 🌴 To help me craft the perfect trip, tell me a bit more:
+                </div>
+
+                <div class="preference-group">
+                    <label>What's your vibe?</label>
+                    <div class="options">
+                        <button class="option-btn">Relaxing 🏖️</button>
+                        <button class="option-btn active">Adventurous 🏄</button>
+                        <button class="option-btn">Cultural 🏛️</button>
+                        <button class="option-btn">Party 🎉</button>
+                    </div>
+                </div>
+
+                <div class="preference-group">
+                    <label>When are you traveling?</label>
+                    <div class="options">
+                        <input type="text" value="Sat, Oct 20 - Sun, Oct 21" readonly>
+                    </div>
+                </div>
+
+                <div class="preference-group">
+                    <label>Your starting point?</label>
+                    <div class="options">
+                        <input type="text" value="Mumbai" readonly>
+                    </div>
+                </div>
+
+                <button class="cta-button" id="generate-btn">Generate Itinerary</button>
+            </div>
+        </div>
+
+        <div class="screen" id="screen-3-loading">
+            <div class="splash-background"></div>
+            <div class="loading-content">
+                <h1>NOMAD</h1>
+                <p>Your AI travel companion</p>
+                <div class="loader">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <p class="loading-text" id="loading-text">Analyzing weather patterns for Goa...</p>
+            </div>
+        </div>
+
+        <div class="screen" id="screen-4-dashboard">
+            <div class="map-header">
+                <img src="https://i.imgur.com/g0P3pIu.png" alt="Map of Goa with pins">
+            </div>
+            
+            <div class="dashboard-content">
+                <div class="tabs">
+                    <button class="tab-btn active" id="tab-itinerary">Itinerary</button>
+                    <button class="tab-btn" id="tab-travel">Travel & Stays</button>
+                </div>
+
+                <div class="tab-content active" id="itinerary-content">
+                    <h2 class="day-title">Day 1</h2>
+                    <div class="card itinerary-card">
+                        <div class="card-text">
+                            <span>9:00 AM</span>
+                            <strong>Watersports at Baga Beach</strong>
+                        </div>
+                        <img src="https://picsum.photos/seed/baga/100/100" alt="Baga Beach">
+                    </div>
+                    <div class="card itinerary-card">
+                        <div class="card-text">
+                            <span>1:00 PM</span>
+                            <strong>Lunch at Britto's</strong>
+                        </div>
+                        <img src="https://picsum.photos/seed/brittos/100/100" alt="Britto's">
+                    </div>
+                    <div class="card itinerary-card" id="card-anjuna">
+                        <div class="card-text">
+                            <span>3:00 PM</span>
+                            <strong>Explore Anjuna Flea Market</strong>
+                        </div>
+                        <img src="https://picsum.photos/seed/anjuna/100/100" alt="Anjuna Market">
+                    </div>
+
+                    <h2 class="day-title">Day 2</h2>
+                    <div class="card itinerary-card">
+                        <div class="card-text">
+                            <span>10:00 AM</span>
+                            <strong>Trek to Dudhsagar Falls</strong>
+                        </div>
+                        <img src="https://picsum.photos/seed/dudhsagar/100/100" alt="Dudhsagar Falls">
+                    </div>
+                </div>
+
+                <div class="tab-content" id="travel-content">
+                    <h2 class="day-title">Flights/Trains</h2>
+                    <div class="card travel-card">
+                        <i class="fa-solid fa-train-subway"></i>
+                        <div class="card-text">
+                            <strong>Mandovi Express</strong>
+                            <span>Weekly train from Mumbai. Approx. 12 hours.</span>
+                        </div>
+                        <button class="check-btn">Check</button>
+                    </div>
+                    
+                    <h2 class="day-title">Suggested Stays</h2>
+                    <div class="horizontal-scroll">
+                        <div class="card stay-card">
+                            <img src="https://picsum.photos/seed/hotel1/200/150" alt="Hotel 1">
+                            <strong>The Waterfront Resort</strong>
+                            <span>★★★★☆</span>
+                        </div>
+                        <div class="card stay-card">
+                            <img src="https://picsum.photos/seed/hotel2/200/150" alt="Hotel 2">
+                            <strong>Goa Beach House</strong>
+                            <span>★★★★★</span>
+                        </div>
+                        <div class="card stay-card">
+                            <img src="https://picsum.photos/seed/hotel3/200/150" alt="Hotel 3">
+                            <strong>Anjuna Palms</strong>
+                            <span>★★★☆☆</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="overlay" id="screen-5-detail">
+            <div class="overlay-header">
+                <button class="close-btn" id="detail-close-btn"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="overlay-content">
+                <img src="https://picsum.photos/seed/anjunabig/600/300" alt="Anjuna Market Large" class="detail-img">
+                <h2>Anjuna Flea Market</h2>
+                
+                <div class="info-bar">
+                    <div class="info-item">
+                        <i class="fa-regular fa-clock"></i>
+                        <span>9:00 AM - 6:00 PM</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fa-solid fa-car"></i>
+                        <span>20 min drive (RAG - Distance)</span>
+                    </div>
+                </div>
+
+                <p class="quote">"Recent reviews mention vibrant, energetic atmosphere with great bargains."</p>
+
+                <div class="widget-container">
+                    <div class="widget vibe-widget">
+                        <h3>Vibe Meter</h3>
+                        <div class="vibe-gauge">
+                            <div class="vibe-needle"></div>
+                        </div>
+                        <span>Bustling</span>
+                    </div>
+                    <div class="widget weather-widget">
+                        <i class="fa-solid fa-sun"></i>
+                        <strong>29°C</strong>
+                        <span>Sunny with a light breeze. Perfect for shopping.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+    <script src="script.js"></script>
+</body>
 </html>

@@ -1,0 +1,566 @@
+/* ===== GLOBAL & SETUP ===== */
+:root {
+    --brand-blue: #0a2e5d;
+    --brand-coral: #ff6b6b;
+    --text-dark: #333;
+    --text-light: #f4f4f4;
+    --bg-light: #ffffff;
+    --bg-grey: #f0f2f5;
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    background: #ccc; /* Background for the desktop view */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
+#app-container {
+    width: 390px;
+    height: 844px; /* Simulates iPhone 12 Pro */
+    background: var(--bg-light);
+    border-radius: 40px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    overflow: hidden;
+    position: relative;
+}
+
+.screen {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.screen.active {
+    display: block;
+    opacity: 1;
+}
+
+.splash-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('https://picsum.photos/seed/goabeach/400/900');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+}
+
+/* ===== SCREEN 1: SPLASH ===== */
+#screen-1-splash {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.splash-content {
+    position: relative;
+    z-index: 2;
+    color: var(--text-light);
+    text-align: center;
+    padding: 40px;
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
+}
+
+.splash-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.splash-content p {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.search-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-dark);
+    width: 100%;
+    padding: 18px 20px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+/* ===== SCREEN 2: REFINE ===== */
+#screen-2-refine .splash-background {
+    filter: blur(10px) brightness(0.8);
+}
+
+.refine-content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    padding-top: 60px; /* Space for status bar */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.chat-bubble {
+    padding: 12px 18px;
+    border-radius: 20px;
+    margin-bottom: 12px;
+    max-width: 80%;
+    font-size: 16px;
+}
+
+.chat-bubble.user {
+    background: var(--brand-coral);
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.nomad {
+    background: var(--bg-grey);
+    color: var(--text-dark);
+    align-self: flex-start;
+    border-bottom-left-radius: 4px;
+}
+
+.preference-group {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.preference-group label {
+    font-weight: 600;
+    font-size: 16px;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.preference-group .options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.option-btn {
+    padding: 10px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    border: 1px solid #ccc;
+    background: white;
+    color: var(--text-dark);
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.option-btn.active {
+    background: var(--brand-blue);
+    color: white;
+    border-color: var(--brand-blue);
+}
+
+.preference-group input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: var(--font-family);
+}
+
+.cta-button {
+    background: var(--brand-coral);
+    color: white;
+    padding: 18px;
+    border-radius: 30px;
+    border: none;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: auto; /* Pushes to bottom */
+    margin-bottom: 20px;
+}
+
+/* ===== SCREEN 3: LOADING ===== */
+#screen-3-loading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.loading-content {
+    position: relative;
+    z-index: 2;
+    color: white;
+}
+
+.loading-content h1 {
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.loading-content p {
+    font-size: 18px;
+    font-weight: 400;
+    margin-bottom: 30px;
+}
+
+.loader {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.loader .dot {
+    width: 15px;
+    height: 15px;
+    background: var(--brand-coral);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.loader .dot:nth-child(1) { animation-delay: -0.32s; }
+.loader .dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1.0); }
+}
+
+.loading-text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+/* ===== SCREEN 4: DASHBOARD ===== */
+#screen-4-dashboard {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-light);
+}
+
+.map-header {
+    width: 100%;
+    height: 300px; /* Fixed height for the map */
+}
+.map-header img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dashboard-content {
+    flex-grow: 1;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background: var(--bg-light);
+    margin-top: -20px; /* Pulls up over the map */
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+    background: var(--bg-grey);
+    color: #888;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.tab-btn.active {
+    background: var(--brand-blue);
+    color: white;
+}
+
+.tab-content {
+    display: none;
+}
+.tab-content.active {
+    display: block;
+}
+
+.day-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-top: 10px;
+}
+
+.card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: white;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.itinerary-card {
+    cursor: pointer;
+}
+
+.card-text {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+.card-text span {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 4px;
+}
+.card-text strong {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.itinerary-card img {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.travel-card i {
+    font-size: 24px;
+    color: var(--brand-blue);
+    width: 30px;
+    text-align: center;
+}
+
+.check-btn {
+    background: var(--brand-coral);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.horizontal-scroll {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding-bottom: 15px;
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+.horizontal-scroll::-webkit-scrollbar {
+    display: none; /* Chrome, Safari */
+}
+
+.stay-card {
+    flex-direction: column;
+    align-items: stretch;
+    width: 180px;
+    flex-shrink: 0;
+    padding: 0;
+}
+.stay-card img {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.stay-card strong {
+    padding: 8px 12px 0 12px;
+    font-size: 15px;
+}
+.stay-card span {
+    padding: 0 12px 8px 12px;
+    font-size: 14px;
+    color: #f39c12;
+}
+
+/* ===== SCREEN 5: DETAIL OVERLAY ===== */
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 85%;
+    background: var(--bg-light);
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
+    box-shadow: 0 -5px 30px rgba(0,0,0,0.15);
+    z-index: 10;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.overlay.active {
+    transform: translateY(0);
+}
+
+.overlay-header {
+    padding: 10px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-btn {
+    background: var(--bg-grey);
+    color: #888;
+    border: none;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.overlay-content {
+    padding: 0 20px 20px 20px;
+    height: calc(100% - 50px); /* Adjust based on header height */
+    overflow-y: auto;
+}
+
+.detail-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 15px;
+}
+
+.overlay-content h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
+
+.info-bar {
+    display: flex;
+    gap: 20px;
+    padding: 15px 0;
+    border-top: 1px solid var(--bg-grey);
+    border-bottom: 1px solid var(--bg-grey);
+    margin-bottom: 15px;
+}
+
+.info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+}
+.info-item i {
+    color: var(--brand-blue);
+    font-size: 16px;
+}
+
+.quote {
+    font-size: 15px;
+    font-style: italic;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.widget-container {
+    display: flex;
+    gap: 15px;
+}
+
+.widget {
+    flex: 1;
+    background: var(--bg-grey);
+    border-radius: 12px;
+    padding: 15px;
+}
+.widget h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.vibe-widget {
+    text-align: center;
+}
+.vibe-gauge {
+    width: 100px;
+    height: 50px;
+    border: 15px solid #eee;
+    border-bottom: none;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    margin: 10px auto 5px;
+    position: relative;
+    border-image: linear-gradient(to right, #3498db, #e67e22, #e74c3c) 1 100%;
+}
+.vibe-needle {
+    width: 3px;
+    height: 50px;
+    background: var(--text-dark);
+    position: absolute;
+    bottom: -15px;
+    left: 50%;
+    transform-origin: bottom center;
+    transform: translateX(-50%) rotate(60deg); /* Points to "Bustling" */
+}
+.vibe-widget span {
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.weather-widget {
+    text-align: center;
+}
+.weather-widget i {
+    font-size: 36px;
+    color: #f39c12;
+    margin-bottom: 8px;
+}
+.weather-widget strong {
+    display: block;
+    font-size: 28px;
+    font-weight: 600;
+}
+.weather-widget span {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.4;
+}
