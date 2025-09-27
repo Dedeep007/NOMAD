@@ -1,566 +1,311 @@
-/* ===== GLOBAL & SETUP ===== */
-:root {
-    --brand-blue: #0a2e5d;
-    --brand-coral: #ff6b6b;
-    --text-dark: #333;
-    --text-light: #f4f4f4;
-    --bg-light: #ffffff;
-    --bg-grey: #f0f2f5;
-    --font-family: 'Inter', sans-serif;
-}
+/* --- Global & Typography --- */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;500;600&display=swap');
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+:root {
+    --font-body: 'Poppins', sans-serif;
+    --font-heading: 'Playfair Display', serif;
+    --color-accent: #FF6B6B;
+    --color-text-primary: #f5f5f5;
+    --color-text-secondary: #a9a9b3;
+    --border-color: rgba(255, 255, 255, 0.15);
 }
 
 body {
-    font-family: var(--font-family);
-    background: #ccc; /* Background for the desktop view */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    color: var(--text-dark);
-}
-
-#app-container {
-    width: 390px;
-    height: 844px; /* Simulates iPhone 12 Pro */
-    background: var(--bg-light);
-    border-radius: 40px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    margin: 0;
+    font-family: var(--font-body);
+    background-color: #0c0c0f;
+    color: var(--color-text-primary);
     overflow: hidden;
-    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
+h1, h2, h3 {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #fff;
+}
+
+/* --- The Magic: Glass Panel Reusable Class --- */
+.glass-panel {
+    background: rgba(35, 35, 45, 0.45);
+    backdrop-filter: blur(30px) saturate(150%);
+    -webkit-backdrop-filter: blur(30px) saturate(150%);
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+/* --- Dynamic Background --- */
+.background-image {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: url('goa-beach.jpg') no-repeat center center / cover;
+    z-index: -1;
+    filter: brightness(0.8) saturate(1.1);
+    animation: kenburns 40s ease-out infinite alternate;
+}
+
+@keyframes kenburns {
+    from { transform: scale(1) translateX(0); }
+    to { transform: scale(1.1) translateX(-2%); }
+}
+
+/* --- Screen Base & Transitions --- */
 .screen {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: none; /* Hidden by default */
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    padding: 40px; box-sizing: border-box;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease-in-out;
 }
 
 .screen.active {
-    display: block;
     opacity: 1;
+    pointer-events: auto;
 }
 
-.splash-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('https://picsum.photos/seed/goabeach/400/900');
-    background-size: cover;
-    background-position: center;
-    z-index: 1;
-}
-
-/* ===== SCREEN 1: SPLASH ===== */
-#screen-1-splash {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    align-items: center;
-}
-
-.splash-content {
-    position: relative;
-    z-index: 2;
-    color: var(--text-light);
-    text-align: center;
-    padding: 40px;
-    width: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.7), rgba(0,0,0,0));
-}
-
-.splash-content h1 {
-    font-size: 48px;
+/* --- Screen 1: Splash & Welcome --- */
+#screen1 .logo {
+    font-size: 8em;
     font-weight: 700;
-    letter-spacing: 2px;
+    text-shadow: 0 2px 25px rgba(0,0,0,0.5);
 }
-
-.splash-content p {
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 30px;
+#screen1 .tagline {
+    font-family: var(--font-body);
+    font-size: 1.5em;
+    font-weight: 300;
+    margin-bottom: 50px;
+    opacity: 0.9;
+    letter-spacing: 1px;
 }
-
 .search-bar {
+    width: 100%;
+    max-width: 550px;
+    padding: 5px 30px 5px 5px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--text-dark);
-    width: 100%;
-    padding: 18px 20px;
-    border-radius: 30px;
-    font-size: 16px;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-}
-
-/* ===== SCREEN 2: REFINE ===== */
-#screen-2-refine .splash-background {
-    filter: blur(10px) brightness(0.8);
-}
-
-.refine-content {
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-radius: 50px;
+    border: 1px solid var(--border-color);
     position: relative;
-    z-index: 2;
-    padding: 20px;
-    padding-top: 60px; /* Space for status bar */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+}
+.search-bar input {
+    flex-grow: 1; border: none; background: transparent;
+    font-size: 1.3em; color: #fff; outline: none; padding: 15px 20px;
 }
 
-.chat-bubble {
-    padding: 12px 18px;
-    border-radius: 20px;
-    margin-bottom: 12px;
-    max-width: 80%;
-    font-size: 16px;
-}
+/* --- Add these new styles to your style.css file --- */
 
-.chat-bubble.user {
-    background: var(--brand-coral);
-    color: white;
-    align-self: flex-end;
-    border-bottom-right-radius: 4px;
-}
-
-.chat-bubble.nomad {
-    background: var(--bg-grey);
-    color: var(--text-dark);
-    align-self: flex-start;
-    border-bottom-left-radius: 4px;
-}
-
-.preference-group {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 16px;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.preference-group label {
-    font-weight: 600;
-    font-size: 16px;
-    margin-bottom: 12px;
-    display: block;
-}
-
-.preference-group .options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.option-btn {
-    padding: 10px 15px;
-    font-size: 14px;
-    font-weight: 500;
-    border: 1px solid #ccc;
-    background: white;
-    color: var(--text-dark);
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.option-btn.active {
-    background: var(--brand-blue);
-    color: white;
-    border-color: var(--brand-blue);
-}
-
-.preference-group input {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 15px;
-    font-family: var(--font-family);
-}
-
-.cta-button {
-    background: var(--brand-coral);
-    color: white;
-    padding: 18px;
-    border-radius: 30px;
+/* Style the new arrow button */
+#next-button {
+    position: absolute;
+    right: 8px; /* Position inside the search bar on the right */
+    top: 50%;
+    transform: translateY(-50%);
+    width: 54px; /* A bit larger for a nice circular look */
+    height: 54px;
+    background: var(--color-accent);
     border: none;
-    font-size: 18px;
-    font-weight: 600;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.4em;
     cursor: pointer;
-    margin-top: auto; /* Pushes to bottom */
-    margin-bottom: 20px;
-}
-
-/* ===== SCREEN 3: LOADING ===== */
-#screen-3-loading {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    
+    /* Animation properties */
+    opacity: 0; /* Start fully transparent */
+    pointer-events: none; /* Not clickable when invisible */
+    transition: opacity 0.4s ease, transform 0.3s ease;
 }
 
-.loading-content {
-    position: relative;
-    z-index: 2;
-    color: white;
+#next-button.visible {
+    opacity: 1;
+    pointer-events: auto;
 }
 
-.loading-content h1 {
-    font-size: 48px;
-    font-weight: 700;
-    letter-spacing: 2px;
+#next-button:hover {
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.6);
 }
 
-.loading-content p {
-    font-size: 18px;
-    font-weight: 400;
-    margin-bottom: 30px;
+/* Make the fake cursor fade out smoothly */
+.cursor {
+    transition: opacity 0.3s ease;
 }
 
-.loader {
-    display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
-}
-
-.loader .dot {
-    width: 15px;
-    height: 15px;
-    background: var(--brand-coral);
-    border-radius: 50%;
-    animation: bounce 1.4s infinite ease-in-out both;
-}
-
-.loader .dot:nth-child(1) { animation-delay: -0.32s; }
-.loader .dot:nth-child(2) { animation-delay: -0.16s; }
-
-@keyframes bounce {
-  0%, 80%, 100% { transform: scale(0); }
-  40% { transform: scale(1.0); }
-}
-
-.loading-text {
-    font-size: 16px;
-    font-weight: 500;
-}
-
-/* ===== SCREEN 4: DASHBOARD ===== */
-#screen-4-dashboard {
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-light);
-}
-
-.map-header {
+/* --- Screen 2: Conversational Refinement --- */
+.chat-container {
+    max-width: 750px;
     width: 100%;
-    height: 300px; /* Fixed height for the map */
+    padding: 40px;
+    text-align: left;
+    composes: glass-panel;
 }
-.map-header img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.chat-bubble {
+    padding: 15px 25px; border-radius: 20px; margin-bottom: 15px;
+    font-size: 1em; border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.chat-bubble.user-query {
+    /* More professional dark gradient, removing the blue */
+    background: linear-gradient(45deg, #2c3e50, #34495e);
+    color: #fff;
+    border-bottom-right-radius: 5px; margin-left: auto; text-align: right; width: fit-content;
+}
+.chat-bubble.app-response {
+    background: rgba(255, 255, 255, 0.05);
+    border-bottom-left-radius: 5px; width: fit-content;
+}
+.pref-label { font-size: 1.1em; color: var(--color-text-secondary); margin-top: 25px; margin-bottom: 15px; font-family: var(--font-body); }
+.button-group { display: flex; flex-wrap: wrap; gap: 15px; }
+.button-group button {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-primary);
+    padding: 10px 20px; border-radius: 30px; font-size: 1em;
+    cursor: pointer; transition: all 0.2s ease;
+}
+.button-group button.selected {
+    background: var(--color-accent); border-color: var(--color-accent);
+    color: #fff; box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+}
+.generate-button {
+    background: var(--color-accent); color: #fff; border: none;
+    padding: 15px 35px; border-radius: 30px; font-size: 1.1em; font-weight: 600;
+    cursor: pointer; margin: 40px auto 0; display: block; transition: all 0.3s ease;
+    box-shadow: 0 5px 25px rgba(255, 107, 107, 0.4);
+}
+.generate-button:hover {
+    transform: translateY(-3px); box-shadow: 0 8px 30px rgba(255, 107, 107, 0.5);
 }
 
-.dashboard-content {
-    flex-grow: 1;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
-    background: var(--bg-light);
-    margin-top: -20px; /* Pulls up over the map */
-    position: relative;
-    z-index: 2;
-    padding: 20px;
-    overflow-y: auto;
+/* --- Screen 3: AI Working --- */
+#screen3 {
+    background-color: rgba(0,0,0,0.5); backdrop-filter: blur(15px);
 }
-
-.tabs {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 20px;
+#screen3 .logo.small { font-size: 5em; }
+.loading-animation .dot {
+    width: 20px; height: 20px; background-color: var(--color-accent); border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out;
+    box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
 }
+/* Other loading styles are fine */
 
-.tab-btn {
-    padding: 10px 20px;
-    font-size: 16px;
-    font-weight: 600;
-    border: none;
-    background: var(--bg-grey);
-    color: #888;
-    border-radius: 20px;
-    cursor: pointer;
+/* --- Screen 4: Dashboard --- */
+.dashboard {
+    flex-direction: row; padding: 0; background: transparent; backdrop-filter: none;
 }
-
-.tab-btn.active {
-    background: var(--brand-blue);
-    color: white;
+.map-panel { flex: 6; height: 100%; }
+.map-panel img { width: 100%; height: 100%; object-fit: cover; }
+.content-panel {
+    flex: 4; height: 100%; display: flex; flex-direction: column; padding: 0;
+    background: rgba(15, 15, 20, 0.5);
+    backdrop-filter: blur(40px) saturate(150%);
+    -webkit-backdrop-filter: blur(40px) saturate(150%);
+    border-left: 1px solid var(--border-color);
 }
-
+.tabs { display: flex; padding: 15px; border-bottom: 1px solid var(--border-color); }
+.tab-button {
+    background: transparent; color: var(--color-text-secondary);
+    border: 1px solid transparent; padding: 10px 20px; border-radius: 20px;
+    margin: 0 5px; cursor: pointer; font-weight: 500; flex: 1; transition: all 0.3s ease;
+}
+.tab-button.active {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.2);
+    color: #fff;
+}
 .tab-content {
-    display: none;
+    display: none; flex-direction: column; gap: 15px; padding: 20px;
+    overflow-y: auto; flex-grow: 1;
 }
-.tab-content.active {
-    display: block;
-}
-
-.day-title {
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 15px;
-    margin-top: 10px;
-}
-
-.card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: white;
+.tab-content.active { display: flex; }
+.tab-content h2 { text-align: left; }
+.itinerary-item {
+    display: flex; align-items: center; padding: 15px; text-align: left;
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
-    padding: 12px;
-    margin-bottom: 12px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-
-.itinerary-card {
-    cursor: pointer;
-}
-
-.card-text {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-}
-.card-text span {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 4px;
-}
-.card-text strong {
-    font-size: 16px;
-    font-weight: 600;
-}
-
-.itinerary-card img {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    object-fit: cover;
-}
-
-.travel-card i {
-    font-size: 24px;
-    color: var(--brand-blue);
-    width: 30px;
-    text-align: center;
-}
-
-.check-btn {
-    background: var(--brand-coral);
-    color: white;
-    border: none;
-    padding: 8px 14px;
+.itinerary-item .time { font-weight: 600; color: var(--color-accent); margin-right: 20px; min-width: 80px; }
+.check-availability-button {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border-color);
+    color: var(--color-text-primary);
+    padding: 8px 15px;
     border-radius: 20px;
-    font-weight: 500;
+    font-size: 0.9em;
     cursor: pointer;
-}
-
-.horizontal-scroll {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding-bottom: 15px;
-    /* Hide scrollbar */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE and Edge */
-}
-.horizontal-scroll::-webkit-scrollbar {
-    display: none; /* Chrome, Safari */
-}
-
-.stay-card {
-    flex-direction: column;
-    align-items: stretch;
-    width: 180px;
-    flex-shrink: 0;
-    padding: 0;
-}
-.stay-card img {
-    width: 100%;
-    height: 110px;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-}
-.stay-card strong {
-    padding: 8px 12px 0 12px;
-    font-size: 15px;
-}
-.stay-card span {
-    padding: 0 12px 8px 12px;
-    font-size: 14px;
-    color: #f39c12;
-}
-
-/* ===== SCREEN 5: DETAIL OVERLAY ===== */
-.overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 85%;
-    background: var(--bg-light);
-    border-top-left-radius: 24px;
-    border-top-right-radius: 24px;
-    box-shadow: 0 -5px 30px rgba(0,0,0,0.15);
-    z-index: 10;
-    transform: translateY(100%);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.overlay.active {
-    transform: translateY(0);
-}
-
-.overlay-header {
-    padding: 10px 20px;
-    display: flex;
-    justify-content: flex-end;
-}
-
-.close-btn {
-    background: var(--bg-grey);
-    color: #888;
-    border: none;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-.overlay-content {
-    padding: 0 20px 20px 20px;
-    height: calc(100% - 50px); /* Adjust based on header height */
-    overflow-y: auto;
-}
-
-.detail-img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-radius: 12px;
-    margin-bottom: 15px;
-}
-
-.overlay-content h2 {
-    font-size: 24px;
-    font-weight: 700;
-    margin-bottom: 15px;
-}
-
-.info-bar {
-    display: flex;
-    gap: 20px;
-    padding: 15px 0;
-    border-top: 1px solid var(--bg-grey);
-    border-bottom: 1px solid var(--bg-grey);
-    margin-bottom: 15px;
-}
-
-.info-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 14px;
     font-weight: 500;
+    transition: all 0.2s ease;
+    margin-left: 10px;
 }
-.info-item i {
-    color: var(--brand-blue);
-    font-size: 16px;
-}
-
-.quote {
-    font-size: 15px;
-    font-style: italic;
-    color: #555;
-    line-height: 1.5;
-    margin-bottom: 20px;
+.check-availability-button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
 }
 
-.widget-container {
-    display: flex;
-    gap: 15px;
+/* --- Screen 5: Detail Modal --- */
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.4); backdrop-filter: blur(10px);
+}
+.detail-panel {
+    width: 100%; max-width: 700px; max-height: 90vh;
+    padding: 30px; box-sizing: border-box; display: flex; flex-direction: column;
+    overflow-y: auto; text-align: left;
+    composes: glass-panel;
+}
+.close-button {
+    position: absolute; top: 20px; right: 20px;
+    background: rgba(0,0,0,0.2); border: 1px solid var(--border-color);
+    color: #fff; border-radius: 50%; width: 35px; height: 35px;
+    display: flex; justify-content: center; align-items: center; cursor: pointer;
+    backdrop-filter: blur(5px);
+}
+.detail-panel h2 { font-size: 2.5em; }
+.info-bar i { color: var(--color-accent); }
+.description-text { font-size: 1.1em; line-height: 1.6; color: var(--color-text-secondary); }
+.vibe-meter, .weather-widget {
+    flex: 1; padding: 20px; border-radius: 15px; text-align: center;
+    background: rgba(0,0,0,0.25); border: 1px solid var(--border-color);
+}
+.vibe-meter h3, .weather-widget h3 { font-family: var(--font-body); font-weight: 500; color: var(--color-text-secondary); text-transform: uppercase; font-size: 0.9em; letter-spacing: 1px; }
+.weather-widget .weather-icon {
+    font-size: 3em; color: #FFD700; margin-bottom: 10px;
+    filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
 }
 
-.widget {
-    flex: 1;
-    background: var(--bg-grey);
-    border-radius: 12px;
-    padding: 15px;
+/* --- Unchanged Styles (like animations, basic structure) --- */
+.input-row, .input-group, .text-input, .loading-animation, .itinerary-item .item-img, .hotel-card, .hotel-carousel, .travel-card, .vibe-meter .meter-gauge, .vibe-text, .hidden-button, .search-bar .cursor {
+    /* These selectors from the previous file can be copied here as they are mostly fine */
+    /* For brevity, I am omitting them, but you should include them from the previous CSS file. */
 }
-.widget h3 {
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-.vibe-widget {
-    text-align: center;
-}
-.vibe-gauge {
-    width: 100px;
-    height: 50px;
-    border: 15px solid #eee;
-    border-bottom: none;
-    border-top-left-radius: 100px;
-    border-top-right-radius: 100px;
-    margin: 10px auto 5px;
-    position: relative;
-    border-image: linear-gradient(to right, #3498db, #e67e22, #e74c3c) 1 100%;
-}
-.vibe-needle {
-    width: 3px;
-    height: 50px;
-    background: var(--text-dark);
-    position: absolute;
-    bottom: -15px;
-    left: 50%;
-    transform-origin: bottom center;
-    transform: translateX(-50%) rotate(60deg); /* Points to "Bustling" */
-}
-.vibe-widget span {
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.weather-widget {
-    text-align: center;
-}
-.weather-widget i {
-    font-size: 36px;
-    color: #f39c12;
-    margin-bottom: 8px;
-}
-.weather-widget strong {
-    display: block;
-    font-size: 28px;
-    font-weight: 600;
-}
-.weather-widget span {
-    font-size: 13px;
-    color: #555;
-    line-height: 1.4;
-}
+/* Explicitly including the ones I omitted for clarity */
+.input-row { display: flex; gap: 20px; margin-top: 20px; }
+.input-group { flex: 1; }
+.text-input { width: 100%; background: rgba(255, 255, 255, 0.1); border: 1px solid var(--border-color); color: #fff; padding: 12px 15px; border-radius: 10px; font-size: 1em; box-sizing: border-box; backdrop-filter: blur(5px); }
+.loading-animation { display: flex; gap: 15px; margin: 30px 0; }
+@keyframes bounce { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+.loading-animation .dot:nth-child(1) { animation-delay: -0.32s; } .loading-animation .dot:nth-child(2) { animation-delay: -0.16s; }
+.loading-messages { font-size: 1.2em; text-shadow: 0 1px 5px rgba(0,0,0,0.3); }
+.itinerary-item .item-img { width: 50px; height: 50px; border-radius: 8px; object-fit: cover; margin-left: auto; }
+.travel-card { display: flex; align-items: center; background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); padding: 15px; border-radius: 10px; text-align: left; color: var(--color-text-primary); }
+.travel-card i { font-size: 1.8em; color: var(--color-text-secondary); margin-right: 15px; }
+.travel-card p { flex-grow: 1; margin: 0; }
+.hotel-carousel { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; }
+.hotel-card { background: rgba(255, 255, 255, 0.05); border: 1px solid var(--border-color); color: var(--color-text-primary); flex-shrink: 0; width: 180px; border-radius: 12px; overflow: hidden; text-align: left; }
+.hotel-card img { width: 100%; height: 110px; object-fit: cover; }
+.hotel-card h3 { font-size: 1em; margin: 10px 10px 5px; }
+.hotel-card .stars { color: #FFD700; font-size: 0.9em; margin: 0 10px 10px; }
+.vibe-meter .meter-gauge { position: relative; width: 120px; height: 60px; border: 8px solid #4a4a58; border-color: #4a4a58 #4a4a58 var(--color-accent) var(--color-accent); border-radius: 120px 120px 0 0; margin: 0 auto 10px; }
+.vibe-meter .meter-gauge .needle { position: absolute; bottom: -8px; left: 50%; width: 3px; height: 50px; background: #fff; transform-origin: bottom center; transform: rotate(120deg); }
+.vibe-text { font-weight: 600; font-size: 1.1em; color: var(--color-accent); }
+.hidden-button { position: absolute; width: 100%; height: 100%; background: transparent; border: none; cursor: pointer; z-index: -1; }
+.search-bar .cursor { width: 2px; height: 24px; background-color: #fff; animation: blink-caret 0.75s step-end infinite; position: absolute; right: 40px; top: 50%; transform: translateY(-50%); }
+@keyframes blink-caret { from, to { background-color: transparent; } 50% { background-color: #fff; } }

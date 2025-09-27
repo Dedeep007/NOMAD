@@ -1,200 +1,256 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NOMAD Prototype</title>
+    <title>NOMAD - AI Travel App Prototype (Desktop)</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.comcom/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
-    <div id="app-container">
 
-        <div class="screen active" id="screen-1-splash">
-            <div class="splash-background"></div>
-            <div class="splash-content">
-                <h1>NOMAD</h1>
-                <p>Your AI travel companion</p>
-                <div class="search-bar" id="start-search-btn">
-                    <span>A weekend trip to Goa</span>
-                    <i class="fa-solid fa-arrow-right"></i>
-                </div>
-            </div>
+    <div class="background-image"></div>
+
+    <div id="screen1" class="screen active">
+        <h1 class="logo">NOMAD</h1>
+        <p class="tagline">Your AI travel companion</p>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Where do you want to explore?" readonly>
+            <div class="cursor"></div>
+            <button id="next-button" onclick="showScreen('screen2')">
+                <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
-
-        <div class="screen" id="screen-2-refine">
-            <div class="splash-background"></div>
-            <div class="refine-content">
-                <div class="chat-bubble user">
-                    A weekend trip to Goa
-                </div>
-                <div class="chat-bubble nomad">
-                    Sounds amazing! 🌴 To help me craft the perfect trip, tell me a bit more:
-                </div>
-
-                <div class="preference-group">
-                    <label>What's your vibe?</label>
-                    <div class="options">
-                        <button class="option-btn">Relaxing 🏖️</button>
-                        <button class="option-btn active">Adventurous 🏄</button>
-                        <button class="option-btn">Cultural 🏛️</button>
-                        <button class="option-btn">Party 🎉</button>
-                    </div>
-                </div>
-
-                <div class="preference-group">
-                    <label>When are you traveling?</label>
-                    <div class="options">
-                        <input type="text" value="Sat, Oct 20 - Sun, Oct 21" readonly>
-                    </div>
-                </div>
-
-                <div class="preference-group">
-                    <label>Your starting point?</label>
-                    <div class="options">
-                        <input type="text" value="Mumbai" readonly>
-                    </div>
-                </div>
-
-                <button class="cta-button" id="generate-btn">Generate Itinerary</button>
-            </div>
-        </div>
-
-        <div class="screen" id="screen-3-loading">
-            <div class="splash-background"></div>
-            <div class="loading-content">
-                <h1>NOMAD</h1>
-                <p>Your AI travel companion</p>
-                <div class="loader">
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                    <div class="dot"></div>
-                </div>
-                <p class="loading-text" id="loading-text">Analyzing weather patterns for Goa...</p>
-            </div>
-        </div>
-
-        <div class="screen" id="screen-4-dashboard">
-            <div class="map-header">
-                <img src="https://i.imgur.com/g0P3pIu.png" alt="Map of Goa with pins">
-            </div>
-            
-            <div class="dashboard-content">
-                <div class="tabs">
-                    <button class="tab-btn active" id="tab-itinerary">Itinerary</button>
-                    <button class="tab-btn" id="tab-travel">Travel & Stays</button>
-                </div>
-
-                <div class="tab-content active" id="itinerary-content">
-                    <h2 class="day-title">Day 1</h2>
-                    <div class="card itinerary-card">
-                        <div class="card-text">
-                            <span>9:00 AM</span>
-                            <strong>Watersports at Baga Beach</strong>
-                        </div>
-                        <img src="https://picsum.photos/seed/baga/100/100" alt="Baga Beach">
-                    </div>
-                    <div class="card itinerary-card">
-                        <div class="card-text">
-                            <span>1:00 PM</span>
-                            <strong>Lunch at Britto's</strong>
-                        </div>
-                        <img src="https://picsum.photos/seed/brittos/100/100" alt="Britto's">
-                    </div>
-                    <div class="card itinerary-card" id="card-anjuna">
-                        <div class="card-text">
-                            <span>3:00 PM</span>
-                            <strong>Explore Anjuna Flea Market</strong>
-                        </div>
-                        <img src="https://picsum.photos/seed/anjuna/100/100" alt="Anjuna Market">
-                    </div>
-
-                    <h2 class="day-title">Day 2</h2>
-                    <div class="card itinerary-card">
-                        <div class="card-text">
-                            <span>10:00 AM</span>
-                            <strong>Trek to Dudhsagar Falls</strong>
-                        </div>
-                        <img src="https://picsum.photos/seed/dudhsagar/100/100" alt="Dudhsagar Falls">
-                    </div>
-                </div>
-
-                <div class="tab-content" id="travel-content">
-                    <h2 class="day-title">Flights/Trains</h2>
-                    <div class="card travel-card">
-                        <i class="fa-solid fa-train-subway"></i>
-                        <div class="card-text">
-                            <strong>Mandovi Express</strong>
-                            <span>Weekly train from Mumbai. Approx. 12 hours.</span>
-                        </div>
-                        <button class="check-btn">Check</button>
-                    </div>
-                    
-                    <h2 class="day-title">Suggested Stays</h2>
-                    <div class="horizontal-scroll">
-                        <div class="card stay-card">
-                            <img src="https://picsum.photos/seed/hotel1/200/150" alt="Hotel 1">
-                            <strong>The Waterfront Resort</strong>
-                            <span>★★★★☆</span>
-                        </div>
-                        <div class="card stay-card">
-                            <img src="https://picsum.photos/seed/hotel2/200/150" alt="Hotel 2">
-                            <strong>Goa Beach House</strong>
-                            <span>★★★★★</span>
-                        </div>
-                        <div class="card stay-card">
-                            <img src="https://picsum.photos/seed/hotel3/200/150" alt="Hotel 3">
-                            <strong>Anjuna Palms</strong>
-                            <span>★★★☆☆</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="overlay" id="screen-5-detail">
-            <div class="overlay-header">
-                <button class="close-btn" id="detail-close-btn"><i class="fa-solid fa-xmark"></i></button>
-            </div>
-            <div class="overlay-content">
-                <img src="https://picsum.photos/seed/anjunabig/600/300" alt="Anjuna Market Large" class="detail-img">
-                <h2>Anjuna Flea Market</h2>
-                
-                <div class="info-bar">
-                    <div class="info-item">
-                        <i class="fa-regular fa-clock"></i>
-                        <span>9:00 AM - 6:00 PM</span>
-                    </div>
-                    <div class="info-item">
-                        <i class="fa-solid fa-car"></i>
-                        <span>20 min drive (RAG - Distance)</span>
-                    </div>
-                </div>
-
-                <p class="quote">"Recent reviews mention vibrant, energetic atmosphere with great bargains."</p>
-
-                <div class="widget-container">
-                    <div class="widget vibe-widget">
-                        <h3>Vibe Meter</h3>
-                        <div class="vibe-gauge">
-                            <div class="vibe-needle"></div>
-                        </div>
-                        <span>Bustling</span>
-                    </div>
-                    <div class="widget weather-widget">
-                        <i class="fa-solid fa-sun"></i>
-                        <strong>29°C</strong>
-                        <span>Sunny with a light breeze. Perfect for shopping.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
+        <button class="hidden-button" onclick="showScreen('screen2')"></button>
     </div>
-    
-    <script src="script.js"></script>
+
+    <div id="screen2" class="screen">
+        <div class="chat-container">
+            <div class="chat-bubble user-query">A weekend trip to Goa</div>
+            <div class="chat-bubble app-response">
+                Sounds amazing! 🌴 To help me craft the perfect trip, tell me a bit more:
+            </div>
+            <div class="preferences">
+                <p class="pref-label">What's your vibe?</p>
+                <div class="button-group">
+                    <button>Relaxing 🏖️</button>
+                    <button class="selected" onclick="simulateSelection(this)">Adventurous 🏄</button>
+                    <button>Cultural 🏛️</button>
+                    <button>Party 🎉</button>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <p class="pref-label">When are you traveling?</p>
+                        <input type="text" class="text-input" value="Jan 20-21, 2026" readonly>
+                    </div>
+                    <div class="input-group">
+                        <p class="pref-label">Your starting point?</p>
+                        <input type="text" class="text-input" value="Mumbai" readonly>
+                    </div>
+                </div>
+            </div>
+            <button class="generate-button" onclick="showScreen('screen3')">Generate Itinerary</button>
+        </div>
+    </div>
+
+    <div id="screen3" class="screen">
+        <h1 class="logo small">NOMAD</h1>
+        <p class="tagline">Your AI travel companion</p>
+        <div class="loading-animation">
+            <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+        <p id="loading-text" class="loading-messages"></p>
+    </div>
+
+    <div id="screen4" class="screen dashboard">
+        <div class="map-panel">
+            <img src="map-mockup.png" alt="Map of Goa">
+        </div>
+        <div class="content-panel">
+            <div class="tabs">
+                <button class="tab-button active" onclick="showContentPanel('itinerary-panel', this)">Itinerary</button>
+                <button class="tab-button" onclick="showContentPanel('travel-stays-panel', this)">Travel &
+                    Stays</button>
+            </div>
+
+            <div id="itinerary-panel" class="tab-content active">
+                <h2>Day 1</h2>
+                <div class="itinerary-item">
+                    <div class="time">9:00 AM</div>
+                    <div class="description">Watersports at Baga Beach</div>
+                    <img src="watersports.jpg" alt="Watersports" class="item-img">
+                </div>
+                <div class="itinerary-item">
+                    <div class="time">1:00 PM</div>
+                    <div class="description">Lunch at Britto's</div>
+                    <img src="brittos.jpg" alt="Britto's" class="item-img">
+                </div>
+                <div class="itinerary-item clickable" onclick="showScreen('screen5')">
+                    <div class="time">4:00 PM</div>
+                    <div class="description">Explore Anjuna Flea Market</div>
+                    <img src="anjana-market.jpg" alt="Anjuna" class="item-img">
+                </div>
+
+                <h2>Day 2</h2>
+                <div class="itinerary-item">
+                    <div class="time">10:00 AM</div>
+                    <div class="description">Trek to Dudhsagar Falls</div>
+                    <img src="dudhsagar.jpg" alt="Dudhsagar" class="item-img">
+                </div>
+                <div class="itinerary-item">
+                    <div class="time">3:00 PM</div>
+                    <div class="description">Visit a Spice Plantation</div>
+                    <img src="spice-plantation.jpg" alt="Spice Plantation" class="item-img">
+                </div>
+            </div>
+
+            <div id="travel-stays-panel" class="tab-content">
+                <h2>Flights/Trains</h2>
+                <div class="travel-card">
+                    <i class="fas fa-train"></i>
+                    <p><strong>Mandovi Express</strong> - Weekly overnight train from Mumbai. Approx. 12 hours.</p>
+                    <button class="check-availability-button">Check availability</button>
+                </div>
+
+                <h2>Suggested Stays</h2>
+                <div class="hotel-carousel">
+                    <div class="hotel-card">
+                        <img src="hotel1.jpg" alt="Hotel 1">
+                        <h3>The Waterfront Resort</h3>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
+                    </div>
+                    <div class="hotel-card">
+                        <img src="hotel2.jpg" alt="Hotel 2">
+                        <h3>Goa Beach House</h3>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                    </div>
+                    <div class="hotel-card">
+                        <img src="hotel3.jpg" alt="Hotel 3">
+                        <h3>The Lively Hostel</h3>
+                        <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                                class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="screen5" class="screen modal-overlay">
+        <div class="detail-panel">
+            <button class="close-button" onclick="showScreen('screen4')"><i class="fas fa-times"></i></button>
+            <h2>Anjuna Flea Market</h2>
+            <img src="anjana-market-large.jpg" alt="Anjuna Flea Market" class="hero-image">
+            <div class="info-bar">
+                <span><i class="far fa-clock"></i> 9:00 AM - 6:00 PM</span>
+                <span><i class="fas fa-car"></i> 20 min drive from your hotel</span>
+            </div>
+            <p class="description-text">"Recent reviews mention a vibrant, energetic atmosphere with great bargains."
+            </p>
+            <div class="vibe-weather-row">
+                <div class="vibe-meter">
+                    <h3>Vibe Meter</h3>
+                    <div class="meter-gauge">
+                        <div class="needle" style="transform: rotate(120deg);"></div>
+                    </div>
+                    <p class="vibe-text">Bustling</p>
+                </div>
+                <div class="weather-widget">
+                    <i class="fas fa-sun weather-icon"></i>
+                    <span class="temperature">29°C</span>
+                    <p class="weather-desc">Sunny & Breezy</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // --- Basic JavaScript for Screen Navigation Simulation ---
+    const screens = document.querySelectorAll('.screen');
+    const loadingMessages = ["Analyzing weather patterns for Goa...", "Checking local news for the latest vibe...", "Calculating travel times and distances...", "Finding top-rated adventurous spots...", "Crafting your personalized itinerary..."];
+    let messageInterval;
+
+    function showScreen(id) {
+        screens.forEach(screen => screen.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+
+        if (id === 'screen3') {
+            startLoadingAnimation();
+            setTimeout(() => showScreen('screen4'), 5000);
+        } else {
+            stopLoadingAnimation();
+        }
+    }
+
+    function startLoadingAnimation() {
+        const loadingTextElement = document.getElementById('loading-text');
+        let currentMessageIndex = 0;
+        loadingTextElement.textContent = loadingMessages[currentMessageIndex];
+        messageInterval = setInterval(() => {
+            currentMessageIndex = (currentMessageIndex + 1) % loadingMessages.length;
+            loadingTextElement.textContent = loadingMessages[currentMessageIndex];
+        }, 1000);
+    }
+
+    function stopLoadingAnimation() {
+        clearInterval(messageInterval);
+    }
+
+    function simulateSelection(button) {
+        document.querySelectorAll('.button-group button').forEach(btn => btn.classList.remove('selected'));
+        button.classList.add('selected');
+    }
+
+    function showContentPanel(panelId, button) {
+        document.querySelectorAll('.tab-content').forEach(panel => panel.classList.remove('active'));
+        document.getElementById(panelId).classList.add('active');
+        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+    }
+
+    // --- NEW: Typing Animation Function ---
+    function typeWriter(text, inputElement, cursorElement, buttonElement) {
+        let i = 0;
+        inputElement.value = ''; // Clear the input field
+        inputElement.placeholder = ''; // Clear placeholder to make typing look clean
+        cursorElement.style.display = 'block'; // Ensure cursor is visible
+        buttonElement.classList.remove('visible'); // Ensure button is hidden
+
+        function type() {
+            if (i < text.length) {
+                inputElement.value += text.charAt(i);
+                i++;
+                // Adjust typing speed here (in ms)
+                setTimeout(type, 90);
+            } else {
+                // Typing finished: fade out cursor, fade in button
+                cursorElement.style.opacity = '0';
+                buttonElement.classList.add('visible');
+            }
+        }
+        type();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        showScreen('screen1'); // Show the first screen on load
+        
+        // Get elements for the animation
+        const searchInput = document.getElementById('search-input');
+        const cursor = document.querySelector('.search-bar .cursor');
+        const nextButton = document.getElementById('next-button');
+        const textToType = "A weekend trip to Goa";
+
+        // Start the typing animation after a short delay for dramatic effect
+        setTimeout(() => {
+            typeWriter(textToType, searchInput, cursor, nextButton);
+        }, 1200); // 1.2-second delay
+    });
+</script>
 </body>
+
 </html>
