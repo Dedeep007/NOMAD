@@ -7,8 +7,10 @@
     <title>NOMAD - AI Travel App Prototype (Desktop)</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.comcom/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 
 <body>
@@ -21,11 +23,11 @@
         <div class="search-bar">
             <input type="text" id="search-input" placeholder="Where do you want to explore?" readonly>
             <div class="cursor"></div>
-            <button id="next-button" onclick="showScreen('screen2')">
+            <button id="next-button" onclick="simulateLoading(this, 2000, 'screen2', 0)">
                 <i class="fas fa-arrow-right"></i>
             </button>
         </div>
-        <button class="hidden-button" onclick="showScreen('screen2')"></button>
+        <button class="hidden-button" onclick="simulateLoading(this, 2000, 'screen2', 0)"></button>
     </div>
 
     <div id="screen2" class="screen">
@@ -36,11 +38,14 @@
             </div>
             <div class="preferences">
                 <p class="pref-label">What's your vibe?</p>
-                <div class="button-group">
-                    <button>Relaxing 🏖️</button>
-                    <button class="selected" onclick="simulateSelection(this)">Adventurous 🏄</button>
-                    <button>Cultural 🏛️</button>
-                    <button>Party 🎉</button>
+                <div class="button-group" role="radiogroup" aria-label="Vibe selection">
+                    <button type="button" role="radio" aria-checked="true" class="selected" onclick="simulateSelection(this)">Relaxing
+                        🏖️</button>
+                    <button type="button" role="radio" aria-checked="false" onclick="simulateSelection(this)">Adventurous 🏄</button>
+                    <button type="button" role="radio" aria-checked="false" onclick="simulateSelection(this)">Cultural
+                        🏛️</button>
+                    <button type="button" role="radio" aria-checked="false" onclick="simulateSelection(this)">Party
+                        🎉</button>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
@@ -53,8 +58,8 @@
                     </div>
                 </div>
             </div>
-            <button class="generate-button" onclick="showScreen('screen3')">Generate Itinerary</button>
         </div>
+        <button class="generate-button" onclick="simulateLoading(this, 2000, 'screen3')">Generate Itinerary</button>
     </div>
 
     <div id="screen3" class="screen">
@@ -68,7 +73,11 @@
 
     <div id="screen4" class="screen dashboard">
         <div class="map-panel">
-            <img src="map-mockup.png" alt="Map of Goa">
+            <!-- <img src="https://picsum.photos/800/600?random=1" alt="Map of Goa"> -->
+            <div class="map-panel">
+                <div id="map" style="width: 100%; height: 100%;"></div>
+            </div>
+
         </div>
         <div class="content-panel">
             <div class="tabs">
@@ -82,29 +91,29 @@
                 <div class="itinerary-item">
                     <div class="time">9:00 AM</div>
                     <div class="description">Watersports at Baga Beach</div>
-                    <img src="watersports.jpg" alt="Watersports" class="item-img">
+                    <img src="https://picsum.photos/50/50?random=2" alt="Watersports" class="item-img">
                 </div>
                 <div class="itinerary-item">
                     <div class="time">1:00 PM</div>
                     <div class="description">Lunch at Britto's</div>
-                    <img src="brittos.jpg" alt="Britto's" class="item-img">
+                    <img src="https://picsum.photos/50/50?random=3" alt="Britto's" class="item-img">
                 </div>
                 <div class="itinerary-item clickable" onclick="showScreen('screen5')">
                     <div class="time">4:00 PM</div>
                     <div class="description">Explore Anjuna Flea Market</div>
-                    <img src="anjana-market.jpg" alt="Anjuna" class="item-img">
+                    <img src="https://picsum.photos/50/50?random=4" alt="Anjuna" class="item-img">
                 </div>
 
                 <h2>Day 2</h2>
                 <div class="itinerary-item">
                     <div class="time">10:00 AM</div>
                     <div class="description">Trek to Dudhsagar Falls</div>
-                    <img src="dudhsagar.jpg" alt="Dudhsagar" class="item-img">
+                    <img src="https://picsum.photos/50/50?random=5" alt="Dudhsagar" class="item-img">
                 </div>
                 <div class="itinerary-item">
                     <div class="time">3:00 PM</div>
                     <div class="description">Visit a Spice Plantation</div>
-                    <img src="spice-plantation.jpg" alt="Spice Plantation" class="item-img">
+                    <img src="https://picsum.photos/50/50?random=6" alt="Spice Plantation" class="item-img">
                 </div>
             </div>
 
@@ -119,19 +128,19 @@
                 <h2>Suggested Stays</h2>
                 <div class="hotel-carousel">
                     <div class="hotel-card">
-                        <img src="hotel1.jpg" alt="Hotel 1">
+                        <img src="https://picsum.photos/180/110?random=7" alt="Hotel 1">
                         <h3>The Waterfront Resort</h3>
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                 class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i></div>
                     </div>
                     <div class="hotel-card">
-                        <img src="hotel2.jpg" alt="Hotel 2">
+                        <img src="https://picsum.photos/180/110?random=8" alt="Hotel 2">
                         <h3>Goa Beach House</h3>
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                 class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
                     </div>
                     <div class="hotel-card">
-                        <img src="hotel3.jpg" alt="Hotel 3">
+                        <img src="https://picsum.photos/180/110?random=9" alt="Hotel 3">
                         <h3>The Lively Hostel</h3>
                         <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i
                                 class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i></div>
@@ -145,7 +154,7 @@
         <div class="detail-panel">
             <button class="close-button" onclick="showScreen('screen4')"><i class="fas fa-times"></i></button>
             <h2>Anjuna Flea Market</h2>
-            <img src="anjana-market-large.jpg" alt="Anjuna Flea Market" class="hero-image">
+            <img src="https://picsum.photos/600/300?random=10" alt="Anjuna Flea Market" class="hero-image">
             <div class="info-bar">
                 <span><i class="far fa-clock"></i> 9:00 AM - 6:00 PM</span>
                 <span><i class="fas fa-car"></i> 20 min drive from your hotel</span>
@@ -169,88 +178,9 @@
         </div>
     </div>
 
-    <script>
-    // --- Basic JavaScript for Screen Navigation Simulation ---
-    const screens = document.querySelectorAll('.screen');
-    const loadingMessages = ["Analyzing weather patterns for Goa...", "Checking local news for the latest vibe...", "Calculating travel times and distances...", "Finding top-rated adventurous spots...", "Crafting your personalized itinerary..."];
-    let messageInterval;
-
-    function showScreen(id) {
-        screens.forEach(screen => screen.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-
-        if (id === 'screen3') {
-            startLoadingAnimation();
-            setTimeout(() => showScreen('screen4'), 5000);
-        } else {
-            stopLoadingAnimation();
-        }
-    }
-
-    function startLoadingAnimation() {
-        const loadingTextElement = document.getElementById('loading-text');
-        let currentMessageIndex = 0;
-        loadingTextElement.textContent = loadingMessages[currentMessageIndex];
-        messageInterval = setInterval(() => {
-            currentMessageIndex = (currentMessageIndex + 1) % loadingMessages.length;
-            loadingTextElement.textContent = loadingMessages[currentMessageIndex];
-        }, 1000);
-    }
-
-    function stopLoadingAnimation() {
-        clearInterval(messageInterval);
-    }
-
-    function simulateSelection(button) {
-        document.querySelectorAll('.button-group button').forEach(btn => btn.classList.remove('selected'));
-        button.classList.add('selected');
-    }
-
-    function showContentPanel(panelId, button) {
-        document.querySelectorAll('.tab-content').forEach(panel => panel.classList.remove('active'));
-        document.getElementById(panelId).classList.add('active');
-        document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-    }
-
-    // --- NEW: Typing Animation Function ---
-    function typeWriter(text, inputElement, cursorElement, buttonElement) {
-        let i = 0;
-        inputElement.value = ''; // Clear the input field
-        inputElement.placeholder = ''; // Clear placeholder to make typing look clean
-        cursorElement.style.display = 'block'; // Ensure cursor is visible
-        buttonElement.classList.remove('visible'); // Ensure button is hidden
-
-        function type() {
-            if (i < text.length) {
-                inputElement.value += text.charAt(i);
-                i++;
-                // Adjust typing speed here (in ms)
-                setTimeout(type, 90);
-            } else {
-                // Typing finished: fade out cursor, fade in button
-                cursorElement.style.opacity = '0';
-                buttonElement.classList.add('visible');
-            }
-        }
-        type();
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        showScreen('screen1'); // Show the first screen on load
-        
-        // Get elements for the animation
-        const searchInput = document.getElementById('search-input');
-        const cursor = document.querySelector('.search-bar .cursor');
-        const nextButton = document.getElementById('next-button');
-        const textToType = "A weekend trip to Goa";
-
-        // Start the typing animation after a short delay for dramatic effect
-        setTimeout(() => {
-            typeWriter(textToType, searchInput, cursor, nextButton);
-        }, 1200); // 1.2-second delay
-    });
-</script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
