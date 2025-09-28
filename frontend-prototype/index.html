@@ -31,21 +31,18 @@
     </div>
 
     <div id="screen2" class="screen">
-        <div class="chat-container">
+        <div class="chat-container glass-panel">
             <div class="chat-bubble user-query">A weekend trip to Goa</div>
             <div class="chat-bubble app-response">
                 Sounds amazing! 🌴 To help me craft the perfect trip, tell me a bit more:
             </div>
             <div class="preferences">
                 <p class="pref-label">What's your vibe?</p>
-                <div class="button-group" role="radiogroup" aria-label="Vibe selection">
-                    <button type="button" role="radio" aria-checked="true" class="selected" onclick="simulateSelection(this)">Relaxing
-                        🏖️</button>
-                    <button type="button" role="radio" aria-checked="false" onclick="simulateSelection(this)">Adventurous 🏄</button>
-                    <button type="button" role="radio" aria-checked="false" onclick="simulateSelection(this)">Cultural
-                        🏛️</button>
-                    <button type="button" role="radio" aria-checked="false" onclick="simulateSelection(this)">Party
-                        🎉</button>
+                <div class="button-group">
+                    <button onclick="simulateSelection(this)">Relaxing 🏖️</button>
+                    <button onclick="simulateSelection(this)">Adventurous 🏄</button>
+                    <button onclick="simulateSelection(this)">Cultural 🏛️</button>
+                    <button onclick="simulateSelection(this)">Party 🎉</button>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
@@ -151,7 +148,7 @@
     </div>
 
     <div id="screen5" class="screen modal-overlay">
-        <div class="detail-panel">
+        <div class="detail-panel glass-panel">
             <button class="close-button" onclick="showScreen('screen4')"><i class="fas fa-times"></i></button>
             <h2>Anjuna Flea Market</h2>
             <img src="https://picsum.photos/600/300?random=10" alt="Anjuna Flea Market" class="hero-image">
