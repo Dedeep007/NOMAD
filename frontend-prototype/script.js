@@ -42,9 +42,36 @@ function stopLoadingAnimation() {
 }
 
 function simulateSelection(button) {
-    document.querySelectorAll('.button-group button').forEach(btn => btn.classList.remove('selected'));
+    console.log('simulateSelection called with:', button);
+    
+    // Remove 'selected' class from all buttons in the button group
+    const allButtons = document.querySelectorAll('.button-group button');
+    console.log('Found buttons:', allButtons.length);
+    
+    allButtons.forEach(btn => {
+        btn.classList.remove('selected');
+        console.log('Removed selected from button:', btn.textContent);
+    });
+    
+    // Add 'selected' class to clicked button
     button.classList.add('selected');
+    console.log('Added selected to button:', button.textContent);
+    console.log('Button classes now:', button.classList.toString());
 }
+
+// Also add event listeners as backup
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM loaded, setting up button event listeners...');
+    const buttons = document.querySelectorAll('.button-group button');
+    console.log('Found buttons for event listeners:', buttons.length);
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            console.log('Event listener triggered for:', this.textContent);
+            simulateSelection(this);
+        });
+    });
+});
 
 function showContentPanel(panelId, button) {
     document.querySelectorAll('.tab-content').forEach(panel => panel.classList.remove('active'));

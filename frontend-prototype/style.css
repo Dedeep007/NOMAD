@@ -168,16 +168,43 @@ h1, h2, h3 {
 }
 .pref-label { font-size: 1.1em; color: var(--color-text-secondary); margin-top: 25px; margin-bottom: 15px; font-family: var(--font-body); }
 .button-group { display: flex; flex-wrap: wrap; gap: 15px; }
-.button-group button {
+
+.button-group input[type="radio"] {
+    display: none;
+}
+
+.button-group label {
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border-color);
     color: var(--color-text-primary);
-    padding: 10px 20px; border-radius: 30px; font-size: 1em;
-    cursor: pointer; transition: all 0.2s ease;
+    padding: 10px 20px; 
+    border-radius: 30px; 
+    font-size: 1em;
+    cursor: pointer; 
+    transition: all 0.2s ease;
+    pointer-events: auto;
+    position: relative;
+    z-index: 10;
+    display: inline-block;
 }
-.button-group button.selected {
-    background: var(--color-accent); border-color: var(--color-accent);
-    color: #fff; box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+
+.button-group label:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-1px);
+}
+
+.button-group input[type="radio"]:checked + label {
+    background: var(--color-accent) !important;
+    border-color: var(--color-accent) !important;
+    color: #fff !important;
+    box-shadow: 0 0 20px rgba(255, 107, 107, 0.4);
+    transform: translateY(-1px);
+}
+
+.button-group input[type="radio"]:checked + label:hover {
+    background: var(--color-accent) !important;
+    box-shadow: 0 0 25px rgba(255, 107, 107, 0.6);
 }
 .generate-button {
     background: var(--color-accent); color: #fff; border: none;

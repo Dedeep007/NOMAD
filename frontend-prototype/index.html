@@ -39,10 +39,17 @@
             <div class="preferences">
                 <p class="pref-label">What's your vibe?</p>
                 <div class="button-group">
-                    <button onclick="simulateSelection(this)">Relaxing 🏖️</button>
-                    <button onclick="simulateSelection(this)">Adventurous 🏄</button>
-                    <button onclick="simulateSelection(this)">Cultural 🏛️</button>
-                    <button onclick="simulateSelection(this)">Party 🎉</button>
+                    <input type="radio" id="relaxing" name="vibe" checked>
+                    <label for="relaxing">Relaxing 🏖️</label>
+                    
+                    <input type="radio" id="adventurous" name="vibe">
+                    <label for="adventurous">Adventurous 🏄</label>
+                    
+                    <input type="radio" id="cultural" name="vibe">
+                    <label for="cultural">Cultural 🏛️</label>
+                    
+                    <input type="radio" id="party" name="vibe">
+                    <label for="party">Party 🎉</label>
                 </div>
                 <div class="input-row">
                     <div class="input-group">
